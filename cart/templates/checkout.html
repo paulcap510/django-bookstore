@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+
+<style>
+  form {
+    text-align: left;
+   }
+
+  .custom-form-container {
+    background-color: #f58220;
+    color: black; 
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  input[type="text"], textarea {
+    border: 1px solid #333; 
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 10px;
+    width: 100%; 
+    width: 50%; 
+  }
+
+  input[type="text"]:focus, textarea:focus {
+    border-color: #555; 
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .custom-form-container {
+    background-color: #ffa500;
+    color: black; 
+    padding: 20px;
+    border-radius: 10px;
+  }
+ 
+
+  .custom-button {
+    background-color: #333; 
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    transition: background-color 0.2s;
+  }
+
+  .custom-button:hover {
+    background-color: #555; 
+  }
+
+  .custom-width-btn {
+    max-width: 200px;
+    width: 100%;
+  }
+</style>
+ <div class="container">
+ <h1 style="text-align: center;">Checkout</h1>
+
+ <table class="table">
+   <thead>
+     <tr>
+       <th>Title</th>
+       <th>Quantity</th>
+       <th>Price</th>
+     </tr>
+   </thead>
+   <tbody>
+     {% for purchase in purchases %}
+     <tr>
+       <td>{{ purchase.book.title }}</td>
+       <td>{{ purchase.quantity }}</td>
+       <td>{{ purchase.book.price }}</td>
+     </tr>
+    {% endfor %}
+    <tr>
+      <td>Total Price:</td>
+      <td> </td>
+      <td> {{ total_price }} </td>
+   </tbody>
+ </table>
+</div>
+
+<div class="container">
+  <div class="custom-form-container">
+ <div class="container">
+ <h2 style="text-align:center;">Please complete your order below</h2>
+ <form method="post" style="text-align:center;">
+  {% csrf_token %}
+  <label for="order_first_name">First Name:</label><br>
+  <input type="text" id="order_first_name" name="order_first_name"><br>
+  <label for="order_last_name">Last Name:</label><br>
+  <input type="text" id="order_last_name" name="order_last_name"><br>
+  <label for="order_cc_no">Credit Card Number:</label><br>
+  <input type="text" id="order_cc_no" name="order_cc_no"><br>
+  <label for="order_cc_date">Expiration Date:</label><br>
+  <input type="text" id="order_cc_date" name="order_cc_date"><br>
+  <label for="order_address">Address:</label><br>
+  <input type="text" id="order_address" name="order_address"><br>
+  <button type="submit" class="btn btn-primary custom-width-btn mt-4">Purchase</button> 
+</form>
+ </div>
+</div>
+</div>
+{% endblock %}

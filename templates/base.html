@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %}Your Shop{% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .navbar {
+      background-color: #000;
+      padding: 10px; 
+    }
+
+    .nav-welcome-text {
+      color: #f58220;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      padding: 10px;
+      border-radius: 5px;
+     }
+     
+
+    .navbar-brand, .navbar-nav .nav-link {
+      color: #f58220 !important; 
+    }
+
+    .navbar-nav {
+      width: 100%; 
+      justify-content: space-between;  
+      text-align: center;       
+      align-items: center;
+    }
+
+    .btn-outline-success {
+      color: #f58220;
+      border-color: #f58220;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #d9534f !important; 
+     }
+
+    .btn-outline-success:hover {
+      color: #fff;
+      background-color: #f58220;
+      border-color: #f58220;
+    }
+
+    .col-md-2, .col-md-10 {
+      padding: 20px;
+    }
+
+    .genre-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .genre-list li {
+      margin-bottom: 10px;
+    }
+
+    .genre-list a {
+      display: block;
+      padding: 10px;
+      background-color: #f58220;
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    .genre-list a:hover {
+      background-color: #d9534f;
+    }
+
+    .footer {
+      text-align: center;
+      background-color: #000 !important; 
+      color: #f58220; 
+      
+    }
+    .right-panel-btn {
+      background-color: #f58220;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+    
+    .right-panel-btn:hover {
+      background-color: #d9534f;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand p-2" href="{% url 'index' %}">My Shop</a>
+    <div class="navbar-nav">
+      <form class="form-inline my-2 my-lg-0 mx-auto" method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+   
+      {% if user.is_authenticated %}
+      <div class="nav-item">
+        <span class="nav-welcome-text">Hi {{ user.username }}</span>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="{% url 'cart:order_history' %}"><i class="fas fa-shopping-cart"></i> History</a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="{% url 'cart:cart_summary' %}"><i class="fas fa-shopping-cart"></i> Cart</a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Sign Out</a>
+      </div>
+      {% else %}
+      <div class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}">Sign In</a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-shopping-cart"></i> Cart</a>
+      </div>
+      {% endif %}
+    </div>
+   </nav>
+
+  <!-- Hero Section -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2" style="background-color: #f8f9fa;">
+        <!-- left side bar covering 20% of the page -->
+        <p class="text-center"><strong>GENRES</strong></p>
+        <ul class="genre-list">
+          <li><a href="{% url 'genre_books' genre='romance' %}">Romance</a></li>          <li><a href="#">Sci Fi</a></li>
+          <li><a href="{% url 'genre_books' genre='nonfiction' %}">Non-Fiction</a></li>
+          <li><a href="{% url 'genre_books' genre='fantasy' %}">Fantasy</a></li>
+          <li><a href="{% url 'genre_books' genre='mystery' %}">Mystery</a></li>
+          <li><a href="{% url 'genre_books' genre='horror' %}">Horror</a></li>
+          <li><a href="{% url 'genre_books' genre='thriller' %}">Thriller</a></li>
+          <li><a href="{% url 'genre_books' genre='comedy' %}">Comedy</a></li>
+          <li><a href="{% url 'genre_books' genre='drama' %}">Drama</a></li>
+        </ul>
+      </div>
+      <div class="col-md-10" style="background-color: #e9ecef;">
+        <!-- right section to display content, 80% of page -->
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer mt-auto py-3" style="background-color: #000; text-align: center; color: #f58220; padding: 10px;">
+    <div class="container">
+      <span class="text">Your Shop &copy; 2023</span>
+    </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

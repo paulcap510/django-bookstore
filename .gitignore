@@ -1,0 +1,17 @@
+# Virtual environment
+venv/
+
+# Database
+db.sqlite3
+db.sqlite3.sqdbpro
+dbsqlite3
+
+# Static files
+staticfiles/
+
+# Media files
+media/
+
+# Ignore Django database migration files
+/core/migrations/
+/cart/migrations/

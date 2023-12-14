@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<style>
+    .add-to-cart-btn {
+        background-color: #f58220;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+       }
+       
+       .add-to-cart-btn:hover {
+        background-color: #d9534f;
+       }
+       
+
+       .parent-container {
+        display: flex;
+        justify-content: space-between;
+       }
+
+       
+       .book-image-container, .book-details-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+       }
+       
+       .book-image-container {
+        justify-content: space-between;
+       }
+       
+       .book-details-container {
+        margin-left: 20px;
+       }
+       
+
+</style>
+<div class="parent-container">
+    <div class="book-image-container">
+      <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+      <form method="post" action="{% url 'cart:cart_add' book.id %}">        
+        {% csrf_token %}
+        <input type="submit" value="Add to Cart" class="add-to-cart-btn" style="margin-top:20px;">
+      </form>
+    </div>
+    <div class="book-details-container" style="text-align:center">
+      <h1>{{ book.title }}</h1>
+      <h3>Price: ${{ book.price }}</h3>
+      <h3>Genre: {{ book.genre }}</h3>
+      <h3>Publisher: {{ book.publisher }}</h3>
+      <h3>ISBN: {{ book.isbn }}</h3>
+      <h3>Publisher: {{ book.pages }}</h3>
+      <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+
+    </div>
+   </div>
+   
+{% endblock %}
